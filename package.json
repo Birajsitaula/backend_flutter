@@ -16,7 +16,7 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.2",
     "@types/sequelize": "^4.28.20",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mysql2": "^3.12.0",
