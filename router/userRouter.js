@@ -35,7 +35,7 @@ router.post("/add", async (req, res) => {
 
     const hash = await bcrypt.hash(password, saltRound);
     const user = await userModel.create({ email, password: hash });
-    res.status(201).json({ message: "user create successfully " });
+    res.status(201).json({ message: "user create successfully ", user });
   } catch (err) {
     console.log("There is an error while add the data in the database ", err);
     res.status(500).json({
@@ -43,5 +43,7 @@ router.post("/add", async (req, res) => {
     });
   }
 });
+
+// Read , update and delete soon
 
 export default router;
