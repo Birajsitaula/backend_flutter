@@ -105,4 +105,27 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// now , delete the data from the database
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ message: "missing the input field" });
+    }
+    const user = await userModel.destroy({ where: { id } });
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
+    res.status(200).json({ message: "user deleted successfully" });
+  } catch (err) {
+    console.log(
+      "There is an error while deleting the data from the database ",
+      err
+    );
+    res.status(500).json({
+      message: "There is an error while deleting the user from the database",
+    });
+  }
+});
+
 export default router;
