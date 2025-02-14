@@ -44,8 +44,6 @@ router.post("/add", async (req, res) => {
   }
 });
 
-// Read , update and delete soon
-// Now , read the data from the database
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
