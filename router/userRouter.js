@@ -68,4 +68,41 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// now , update the data in the database
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { email, password } = req.body;
+    if (!id || !email || !password) {
+      return res.status(400).json({ message: "missing the input field" });
+    }
+
+    if (!isValidPassword(password)) {
+      return res.status(400).json({
+        message:
+          "Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.",
+      });
+    }
+
+    const hash = await bcrypt.hash(password, saltRound);
+    const user = await userModel.update(
+      { email, password: hash },
+      { where: { id } }
+    );
+    if (!user[0]) {
+      return res.status(404).json({ message: "user not found" });
+    }
+    const updateUser = await userModel.findByPk(id);
+    res.status(200).json({ message: "user updated successfully", updateUser });
+  } catch (err) {
+    console.log(
+      "There is an error while updating the data in the database ",
+      err
+    );
+    res.status(500).json({
+      message: "There is an error while updating the user in the database",
+    });
+  }
+});
+
 export default router;
